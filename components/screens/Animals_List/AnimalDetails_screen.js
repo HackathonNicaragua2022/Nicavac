@@ -36,6 +36,11 @@ const AnimalDetails_screen  = (props) => {
         )
     }
 
+    const Historial_screen=()=> {
+        props.navigation.navigate('Historial_screen');
+        console.log()
+    }
+
     return (
         
         <ScrollView>
@@ -57,7 +62,7 @@ const AnimalDetails_screen  = (props) => {
                 <Text style={{fontSize: 18}}>Colores: Café con Negro</Text>
                 <Text style={{fontSize: 18}}>Objetivo principal: Semental</Text>
                 <Text style={{fontSize: 18}}>Objetivos secundarios: Subasta</Text>
-                <Text style={{fontSize: 18, color: "blue", alignSelf: "flex-end"}}>Historial de vacunas</Text>
+                <Text style={{fontSize: 18, color: "blue", alignSelf: "flex-end"}} onPress={() => Historial_screen()}>Historial de vacunas</Text>
 
                 <Text style={{fontSize: 22, alignSelf: "center", fontWeight: "bold", marginTop: 10}}>Descripción</Text>
                 <View style={{padding: 10, backgroundColor: "#ffffff", borderRadius: 30, borderWidth: 1, borderColor: "#bfbfbf"}}>

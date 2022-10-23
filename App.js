@@ -18,6 +18,7 @@ import NewAnimal_screen from './components/screens/Animals_List/NewAnimal_screen
 import BullsList_screen from './components/screens/Animals_List/BullsList_screen';
 import CowsList_screen from './components/screens/Animals_List/CowsList_screen';
 import AnimalDetails_screen from './components/screens/Animals_List/AnimalDetails_screen';
+import Historial_screen from './components/screens/Animals_List/Historial_screen';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,11 @@ function MyStack() {
         name= 'NewCattle_screen' 
         component={NewCattle_screen} 
         options= {{title: 'Nueva Finca', headerShown: true}}
+      />
+      <Stack.Screen 
+        name= 'Historial_screen' 
+        component={Historial_screen} 
+        options= {{title: 'Historial de vacunas', headerShown: true}}
       />
       <Stack.Screen
         name= 'Category_screen'
