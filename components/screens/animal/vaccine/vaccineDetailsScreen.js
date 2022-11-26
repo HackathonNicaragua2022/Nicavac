@@ -6,6 +6,8 @@ import moment from "moment/moment";
 import { ListItem } from "react-native-elements";
 
 const VaccineDetailsScreen = (props) => {
+
+    //Se inicializan los valores del objeto
     const initialVaccine = {
         vaccineAnimalId: '',
         vaccineName: '',
@@ -16,6 +18,7 @@ const VaccineDetailsScreen = (props) => {
 
     const [vaccine, setVaccine] = useState(initialVaccine);
 
+    //Lectura de los datos de la vacuna
     const getVaccineById = async (vaccineId) => {
         const dbref = firebase.db.collection('vaccines').doc(vaccineId)
         const doc = await dbref.get();
@@ -50,6 +53,7 @@ const VaccineDetailsScreen = (props) => {
         }
     }
 
+    //Extracción del id de la vacuna
     useEffect(() => {
         getVaccineById(props.route.params.vaccineId)
     }, []);

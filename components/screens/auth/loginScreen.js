@@ -10,6 +10,7 @@ export default function Login(props) {
     const [authenticaded, setAuthenticaded] = useState(false);
     const [isloading, setIsloading] = useState(false);
 
+    //función para iniciar sesión
     const signInUser = async () => {
         setIsloading(true)
         await firebase.authentication.signInWithEmailAndPassword(email, password)

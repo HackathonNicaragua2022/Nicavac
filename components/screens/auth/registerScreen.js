@@ -9,6 +9,7 @@ export default function Register(props) {
     const [pass, setPass] = useState('')
     const [authenticaded, setAuthenticaded] = useState(false)
 
+    //función para crear un nuevo usuario
     const registrarUsuario = async () => {
         if (pass.length < 6) {
             Alert.alert(

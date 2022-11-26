@@ -9,6 +9,7 @@ import moment from "moment/moment";
 
 const VaccinesListScreen = (props) => {
 
+    //Se inicializan los valores del objeto
     const initialNewVaccine = {
         vaccineAnimalId: props.route.params.animalId,
         vaccineType: '',
@@ -19,14 +20,17 @@ const VaccinesListScreen = (props) => {
     const [newVaccine, setNewVaccine] = useState(initialNewVaccine);
     const [date, setDate] = useState(new Date);
 
+    //Tipo de tratamiento
     const selectVaccineTypeText = (value, vaccineType) => {
         setNewVaccine({ ...newVaccine, [vaccineType]: value });
     };
 
+    //Nombre del tratamiento
     const handleChangeText = (value, vaccineName) => {
         setNewVaccine({ ...newVaccine, [vaccineName]: value });
     };
 
+    //Fecha del tratamiento
     const selectDate = (value, vaccineDate) => {
         setDate({ ...newVaccine, [vaccineDate]: value });
     };
@@ -48,6 +52,7 @@ const VaccinesListScreen = (props) => {
         showMode('date');
     };
 
+    //Función que agrega un nuevo objeto a la colección tratamientos
     const newAnimalVaccine = async () => {
         if (newVaccine.vaccineName === '') {
             Alert.alert(
@@ -68,6 +73,7 @@ const VaccinesListScreen = (props) => {
 
     const [vaccines, setVaccines] = useState([]);
 
+    //Lectura de los datos del objeto
     useEffect(() => {
         firebase.db.collection('vaccines').onSnapshot((querySnapshot) => {
             const vaccines = [];
@@ -87,6 +93,7 @@ const VaccinesListScreen = (props) => {
         });
     }, []);
 
+    //función que elimina al objeto seleccionado de la colección
     const deleteVaccine = async (vaccine) => {
         const dbRef = firebase.db.collection('vaccines').doc(vaccine.vaccineId)
         await dbRef.delete()

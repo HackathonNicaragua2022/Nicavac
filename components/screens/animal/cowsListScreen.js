@@ -11,6 +11,7 @@ const CowsListScreen = (props) => {
 
     const cattleId = props.route.params.cattleId
 
+    //Extracción del id de la vacuna
     useEffect(() => {
         firebase.db.collection('animals').onSnapshot((querySnapshot) => {
             const animals = [];

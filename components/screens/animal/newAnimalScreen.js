@@ -8,6 +8,7 @@ import { Alert } from 'react-native';
 
 const NewAnimalScreen = (props) => {
 
+    //inicialización de los datos del objeto
     const initialAnimal = {
         animalCode: '',
         animalName: '',
@@ -24,26 +25,32 @@ const NewAnimalScreen = (props) => {
     const [animal, setAnimal] = useState(initialAnimal);
     const [date, setDate] = useState(new Date);
 
+    //definición del código del animal
     const handleCodeText = (value, animalCode) => {
         setAnimal({ ...animal, [animalCode]: value });
     };
 
+    //definición del nombre del animal
     const handleNameText = (value, animalName) => {
         setAnimal({ ...animal, [animalName]: value });
     };
 
+    //definición del género del animal
     const selectGenererText = (value, animalGenerer) => {
         setAnimal({ ...animal, [animalGenerer]: value });
     };
 
+    //definición de la raza
     const selectRaceText = (value, animalRace) => {
         setAnimal({ ...animal, [animalRace]: value });
     };
 
+    //definición del peso
     const selectWeightText = (value, animalWeight) => {
         setAnimal({ ...animal, [animalWeight]: value });
     };
 
+    //definición de la fecha de nacimiento
     const selectDate = (value, animalBirth) => {
         setDate({ ...animal, [animalBirth]: value });
     };
@@ -65,14 +72,17 @@ const NewAnimalScreen = (props) => {
         showMode('date');
     };
 
+    //definición de la actividad principal
     const selectMainActivityText = (value, animalMainActivity) => {
         setAnimal({ ...animal, [animalMainActivity]: value });
     };
 
+    //definición de la actividad secundaria
     const selectSidelineText = (value, animalSideline) => {
         setAnimal({ ...animal, [animalSideline]: value });
     };
 
+    //función para crear un nuevo animal
     const newAnimal = async () => {
         if ((animal.animalName === '') || (animal.animalCode === '') || (animal.animalGenerer==='--'||(animal.animalRace==='--'||(animal.animalMainActivity==='--')))) {
             alert('Complete los campos');

@@ -105,7 +105,7 @@ function MyStack() {
       <Stack.Screen
         name='vaccineDetailsScreen'
         component={VaccineDetailsScreen}
-        options={{title: 'Detalles de la vacuna', headerShown: true, headerTintColor: 'white', headerStyle: {
+        options={{title: 'Detalles del tratamiento', headerShown: true, headerTintColor: 'white', headerStyle: {
           backgroundColor: '#346a4a',
         },}}
       />

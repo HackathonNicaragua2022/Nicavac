@@ -11,6 +11,7 @@ const CalvesListScreen = (props) => {
 
     const cattleId = props.route.params.cattleId
 
+    //lectura de los datos de los animales
     useEffect(() => {
         firebase.db.collection('animals').onSnapshot((querySnapshot) => {
             const animals = [];

@@ -10,8 +10,10 @@ const BullsListScreen = (props) => {
     const [animals, setAnimals] = useState([]);
     const [search, setSearch] = useState('');
 
+    //extracción del id de la finca
     const cattleId = props.route.params.cattleId
 
+    //lectura de los datos de los animales
     useEffect(() => {
         firebase.db.collection('animals').onSnapshot((querySnapshot) => {
             const animals = [];

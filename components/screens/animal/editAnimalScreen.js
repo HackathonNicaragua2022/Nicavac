@@ -7,6 +7,7 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 const EditAnimalScreen = (props) => {
 
+    //inicialización de datos del objeto
     const initialState = {
         animalId: '',
         animalCode: '',
@@ -26,26 +27,32 @@ const EditAnimalScreen = (props) => {
     const [animal, setAnimal] = useState(initialState)
     const [date, setDate] = useState(new Date)
 
+    //definición del código
     const handleCodeText = (value, animalCode) => {
         setAnimal({ ...animal, [animalCode]: value });
     }
 
+    //definición del nombre
     const handleAnimalText = (value, animalName) => {
         setAnimal({ ...animal, [animalName]: value });
     };
 
+    //definición del género
     const selectedGenererText = (value, animalGenerer) => {
         setAnimal({ ...animal, [animalGenerer]: value });
     }
 
+    //definición de la raza
     const selectRaceText = (value, animalRace) => {
         setAnimal({ ...animal, [animalRace]: value });
     }
 
+    //definición del peso
     const selectWeightText = (value, animalWeight) => {
         setAnimal({ ...animal, [animalWeight]: value })
     }
 
+    //definición de la fecha de nacimiento
     const selectDate = (value, animalBirth) => {
         setDate({ ...animal, [animalBirth]: value });
     };
@@ -67,14 +74,17 @@ const EditAnimalScreen = (props) => {
         showMode('date');
     };
 
+    //definición de la actividad principal
     const selectMainActivityText = (value, animalMainActivity) => {
         setAnimal({ ...animal, [animalMainActivity]: value });
     }
 
+    //definición de la actividad secundaria
     const selectSidelineText = (value, animalSideline) => {
         setAnimal({ ...animal, [animalSideline]: value });
     }
 
+    //lectura de los datos del animal
     const getAnimalById = async () => {
         const dbRef = firebase.db.collection('animals').doc(animalId_)
         const doc = await dbRef.get();
@@ -86,12 +96,14 @@ const EditAnimalScreen = (props) => {
         setLoading(false)
     }
 
+    //Extracción del id del animal
     useEffect(() => {
         getAnimalById(props.route.params.animalId);
     }, []);
 
     const animalId_ = props.route.params.animalId
 
+    //función para editar los datos del animal
     const updateAnimal = async () => {
         if ((animal.animalName === '') || (animal.animalCode === '') || (animal.animalGenerer === '--' || (animal.animalRace === '--' || (animal.animalMainActivity === '--')))) {
             alert('Complete los campos');

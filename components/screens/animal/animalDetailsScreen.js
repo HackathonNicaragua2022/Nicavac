@@ -7,6 +7,7 @@ import { ListItem } from "react-native-elements";
 
 const AnimalDetailsScreen = (props) => {
 
+    //se inicializan los valores del objeto
     const initialAnimal = {
         animalId: '',
         animalCode: '',
@@ -29,6 +30,7 @@ const AnimalDetailsScreen = (props) => {
         setAnimal({ ...animal, [animalDescription]: value });
     };
 
+    //se actualiza la descripción
     const newDescription = async () => {
         const dbRef = firebase.db.collection('animals').doc(animal.animalId);
         await dbRef.set({
@@ -45,6 +47,7 @@ const AnimalDetailsScreen = (props) => {
         })
     }
 
+    //lectura de los datos del objeto
     const getAnimalById = async (animalId) => {
         const dbRef = firebase.db.collection('animals').doc(animalId)
         const doc = await dbRef.get();
@@ -79,6 +82,7 @@ const AnimalDetailsScreen = (props) => {
         }
     }
 
+    //extracción del id del animal
     useEffect(() => {
         getAnimalById(props.route.params.animalId)
     }, []);
@@ -91,6 +95,7 @@ const AnimalDetailsScreen = (props) => {
         )
     }
 
+    //función que elimina un objeto de la colección
     const deleteAnimal = async () => {
         const dbRef = firebase.db.collection('animals').doc(props.route.params.animalId)
         await dbRef.delete()
