@@ -3,11 +3,11 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Text, View, Image, StyleSheet, ActivityIndicator, Alert, TextInput, Button } from "react-native";
 import firebase from '../../../database/firebase'
 import moment from "moment/moment";
-import { ListItem } from "react-native-elements";
+import { ListItem, Avatar } from "react-native-elements";
 
 const AnimalDetailsScreen = (props) => {
 
-    //se inicializan los valores del objeto
+    //se inicializan los valores del objeto animal
     const initialAnimal = {
         animalId: '',
         animalCode: '',
@@ -16,10 +16,12 @@ const AnimalDetailsScreen = (props) => {
         animalRace: '',
         animalBirth: '',
         animalWeight: '',
+        animalLactationCycle: '',
         animalMainActivity: '',
         animalSideline: '',
         animalDescription: '',
         animalCattle: '',
+        animalCastrate: '',
     };
 
     const [loading, setLoading] = useState(true)
@@ -40,14 +42,16 @@ const AnimalDetailsScreen = (props) => {
             animalRace: animal.animalRace,
             animalBirth: animal.animalBirth,
             animalWeight: animal.animalWeight,
+            animalLactationCycle: animal.animalLactationCycle,
             animalMainActivity: animal.animalMainActivity,
             animalSideline: animal.animalSideline,
             animalCattle: animal.animalCattle,
-            animalDescription: animal.animalDescription
+            animalDescription: animal.animalDescription,
+            animalCastrate: animal.animalCastrate,
         })
     }
 
-    //lectura de los datos del objeto
+    //lectura de los datos del objeto animal
     const getAnimalById = async (animalId) => {
         const dbRef = firebase.db.collection('animals').doc(animalId)
         const doc = await dbRef.get();
@@ -97,8 +101,8 @@ const AnimalDetailsScreen = (props) => {
 
     //función que elimina un objeto de la colección
     const deleteAnimal = async () => {
-        const dbRef = firebase.db.collection('animals').doc(props.route.params.animalId)
-        await dbRef.delete()
+        const dbRefA = firebase.db.collection('animals').doc(props.route.params.animalId)
+        await dbRefA.delete()
         props.navigation.navigate('cattlesListScreen')
     }
 
@@ -113,44 +117,182 @@ const AnimalDetailsScreen = (props) => {
         )
     }
 
+    function headDetails() {
+        if (monthFormat() < 24) {
+            return (
+                <View >
+                    <Avatar size={70}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/4478/4478312.png',
+                        }}
+                    />
+                </View>
+            )
+        } else if ((monthFormat() > 23) && (monthFormat() < 49) && ((animal.animalCastrate === 'No') || (animal.animalCastrate === '--'))) {
+            return (
+                <View >
+                    <Avatar size={70}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/1660/1660788.png',
+                        }}
+                    />
+                </View>
+            )
+        } else if (((monthFormat() < 23) && (monthFormat() < 49)) && (animal.animalGenerer === 'M') && (animal.animalCastrate === 'Sí')) {
+            return (
+                <View >
+                    <Avatar size={70}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/2298/2298414.png',
+                        }}
+                    />
+                </View>
+            )
+        } else if ((monthFormat() > 48) && (animal.animalGenerer === 'M') && (animal.animalCastrate === 'Sí')) {
+            return (
+                <View >
+                    <Avatar size={70}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3570/3570832.png',
+                        }}
+                    />
+                </View>
+            )
+        } else if ((monthFormat() > 48) && (animal.animalGenerer === 'M') && (animal.animalCastrate === 'No')) {
+            return (
+                <View >
+                    <Avatar size={70}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3819/3819472.png',
+                        }}
+                    />
+                </View>
+            )
+        } else if ((monthFormat() > 48) && (animal.animalGenerer === 'H')) {
+            return (
+                <View >
+                    <Avatar size={70}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/2395/2395765.png',
+                        }}
+                    />
+                </View>
+            )
+        }
+    }
+
     return (
         <ScrollView style={{ backgroundColor: '#ffffff' }}>
-            <View style={styles.containerLogo}>
-                <Image
-                    source={require('../../src/ganado.png')}
-                />
+            <View style={{ marginLeft: 20, marginTop: 10, flexDirection: 'row', alignItems: 'center' }}>
+                <View>{headDetails()}</View>
+                <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 20, marginRight: 20 }}>
+                    <Text style={{ fontSize: 30, fontWeight: "bold" }}>{animal.animalName}</Text>
+                    <View style={styles.iconos}>
+                        <Avatar size={20}
+                            source={{
+                                uri: 'https://cdn-icons-png.flaticon.com/512/748/748150.png',
+                            }
+                            }
+                        />
+                        <Text style={{ fontSize: 18 }}> Código: {animal.animalCode}</Text>
+                    </View>
+                </View>
             </View>
 
-            <Text style={{ fontSize: 30, alignSelf: "center", fontWeight: "bold", marginBottom: 1 }}
-            >{animal.animalName}</Text>
+            <View style={{ padding: 20, backgroundColor: "#d9d9d9", width: 375, borderWidth: 1, borderRadius: 10, alignSelf: "center" }}>
+                <View style={styles.iconos}>
+                    <Avatar size={20}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3143/3143636.png',
+                        }
+                        }
+                    />
+                    <View>
+                        <Text style={{ fontSize: 18 }}> F. Nacimiento: {dateFormat()}</Text>
+                        <Text style={{ fontSize: 18 }}>{'(' + monthFormat()} meses cumplidos{')'}</Text>
+                    </View>
+                </View>
 
-            <Text style={{ fontSize: 18, alignSelf: "center", marginBottom: 10 }}
-            >Código: {animal.animalCode}</Text>
 
-            <View style={{ padding: 20, backgroundColor: "#d9d9d9", width: 375, borderRadius: 10, alignSelf: "center" }}>
-                <Text style={{ fontSize: 18 }}
-                >Fecha de nacimiento: {dateFormat()}</Text>
-                <Text style={{ fontSize: 18 }}>Meses: {monthFormat()}</Text>
-                <Text style={{ fontSize: 18 }}>Raza: {animal.animalRace}</Text>
-                <Text style={{ fontSize: 18 }}>Peso: {animal.animalWeight} libras</Text>
-                <Text style={{ fontSize: 18 }}>Actividad principal: {animal.animalMainActivity}</Text>
-                <Text style={{ fontSize: 18 }}>Actividad secundaria: {animal.animalSideline}</Text>
+                <View style={styles.iconos}>
+                    <Avatar size={20}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/523/523448.png',
+                        }
+                        }
+                    />
+                    <Text style={{ fontSize: 18 }}> Raza: {animal.animalRace}</Text>
+                </View>
+
+                <View style={styles.iconos}>
+                    <Avatar size={20}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/2312/2312968.png',
+                        }
+                        }
+                    />
+                    <Text style={{ fontSize: 18 }}> Peso: {animal.animalWeight}kg</Text>
+                </View>
+
+                <View style={styles.iconos}>
+                    <Avatar size={20}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3570/3570848.png',
+                        }
+                        }
+                    />
+                    <Text style={{ fontSize: 18 }}> Castrado: {animal.animalCastrate}</Text>
+                </View>
+
+                <View style={styles.iconos}>
+                    <Avatar size={20}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3330/3330769.png',
+                        }
+                        }
+                    />
+                    <Text style={{ fontSize: 18 }}> Act. principal: {animal.animalMainActivity}</Text>
+                </View>
+
+                <View style={styles.iconos}>
+                    <Avatar size={20}
+                        source={{
+                            uri: 'https://cdn-icons-png.flaticon.com/512/3330/3330665.png',
+                        }
+                        }
+                    />
+                    <Text style={{ fontSize: 18 }}> Act. secundaria: {animal.animalSideline}</Text>
+                </View>
+
 
                 <TouchableOpacity style={{ alignItems: 'flex-end', marginTop: 10 }} onPress={() => props.navigation.navigate('vaccinesListScreen', {
                     animalId: animal.animalId
                 })}>
                     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#1b92e2', fontWeight: 'bold' }}>Salud </Text>
-                        <Image
-                            style={{ width: 21, height: 21 }}
-                            source={require('../../src/ir.png')}
+                        <Avatar size={22}
+                            source={{
+                                uri: 'https://cdn-icons-png.flaticon.com/512/5372/5372689.png',
+                            }}
+                        />
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ alignItems: 'flex-end', marginTop: 10 }} onPress={() => props.navigation.navigate('dataScreen', {
+                    animalId: animal.animalId
+                })}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 18, color: '#1b92e2', fontWeight: 'bold' }}>Datos </Text>
+                        <Avatar size={22}
+                            source={{
+                                uri: 'https://cdn-icons-png.flaticon.com/512/5372/5372689.png',
+                            }}
                         />
                     </View>
                 </TouchableOpacity>
             </View>
 
-            <View style={{ padding: 20 }}>
-                <View style={{flex: 1, flexDirection:'row', alignItems: 'center'}}>
+            <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
+                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontSize: 20, marginBottom: 5 }}>Descripción </Text>
 
                     <TouchableOpacity onPress={() => newDescription()}>
@@ -164,7 +306,7 @@ const AnimalDetailsScreen = (props) => {
                 </View>
                 <TextInput
                     multiline
-                    style={{ borderWidth: 1, borderColor: '#bfbfbf', borderRadius: 10, fontSize: 20, padding: 10 }}
+                    style={{ marginBottom: 10, borderWidth: 1, borderRadius: 10, fontSize: 20, padding: 10 }}
                     placeholder="Descripción"
                     onChangeText={(value) => handleDescriptionText(value, 'animalDescription')}
                     value={animal.animalDescription}></TextInput>
@@ -192,12 +334,6 @@ const AnimalDetailsScreen = (props) => {
 }
 
 const styles = StyleSheet.create({
-    containerLogo: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 10,
-    },
     textStyle: {
         padding: 10,
         alignSelf: "center"
@@ -257,6 +393,11 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
+    },
+    iconos: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
     },
 });
 

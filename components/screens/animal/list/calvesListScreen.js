@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ListItem, Avatar, SearchBar } from 'react-native-elements';
-import { FlatList, ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import firebase from '../../../database/firebase';
+import { ScrollView } from 'react-native-gesture-handler';
+import firebase from '../../../../database/firebase';
 import moment from 'moment';
 
-const BullsListScreen = (props) => {
+const CalvesListScreen = (props) => {
 
     const [animals, setAnimals] = useState([]);
-    const [search, setSearch] = useState('');
 
-    //extracción del id de la finca
     const cattleId = props.route.params.cattleId
 
     //lectura de los datos de los animales
@@ -26,7 +24,7 @@ const BullsListScreen = (props) => {
                     const dateFormatl = new Date(parseInt(milliseconds))
                     const now = moment();
                     const mo = now.diff(dateFormatl, 'months');
-                    if ((mo > 48) && (animalGenerer === 'M') && (animalCattle === cattleId)) {
+                    if ((mo <= 12) && (animalCattle === cattleId)) {
                         animals.push({
                             animalId: doc.id,
                             animalCode,
@@ -37,40 +35,33 @@ const BullsListScreen = (props) => {
                         });
                     }
                 }
+
             });
             setAnimals(animals);
         });
     }, []);
 
     return (
-        <View style={{ padding: 10, backgroundColor: '#ffffff' }}>
-            <TextInput
-                style={styles.textInput}
-                placeholder= '  Buscar toro'
-                value={search}
-                onChangeText={(text) => setSearch(text)}
-            />
-            <FlatList
-                data={animals}
-                renderItem={({ item }) => (
-                    <ListItem style={styles.list} key={item.animalId}
+        <ScrollView style={styles.container}>
+            {animals.map((animal) => {
+                return (
+                    <ListItem style={styles.list} key={animal.animalId}
                         onPress={() => props.navigation.navigate('animalDetailsScreen', {
-                            animalId: item.animalId
+                            animalId: animal.animalId
                         })}>
                         <Avatar
                             source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/512/3819/3819549.png',
+                                uri: 'https://cdn-icons-png.flaticon.com/512/4478/4478312.png',
                             }}
                         />
                         <ListItem.Content>
-                            <ListItem.Title style={{ fontWeight: "bold" }}>{item.animalName}</ListItem.Title>
-                            <ListItem.Subtitle>Código: {item.animalCode}</ListItem.Subtitle>
+                            <ListItem.Title style={{ fontWeight: "bold" }}>{animal.animalName}</ListItem.Title>
+                            <ListItem.Subtitle>Código: {animal.animalCode}</ListItem.Subtitle>
                         </ListItem.Content>
                     </ListItem>
-                )}
-            />
-        </View>
-
+                )
+            })}
+        </ScrollView>
     );
 };
 
@@ -84,15 +75,7 @@ const styles = StyleSheet.create({
     },
     txt: {
         backgroundColor: '#bfbfbf'
-    },
-    textInput: {
-        height: 40,
-        borderWidth: 1,
-        borderColor: '#cecece',
-        marginBottom: 10,
-        marginHorizontal: 10,
-        borderRadius: 30
-    },
+    }
 })
 
-export default BullsListScreen;
+export default CalvesListScreen;

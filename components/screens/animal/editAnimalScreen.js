@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TextInput, StyleSheet, Button } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import firebase from "../../../database/firebase";
 import { Picker } from "@react-native-picker/picker";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import moment from "moment/moment";
 
 const EditAnimalScreen = (props) => {
 
@@ -16,6 +17,8 @@ const EditAnimalScreen = (props) => {
         animalRace: '',
         animalBirth: '',
         animalWeight: '',
+        animalCastrate: '',
+        animalLactationCycle: '',
         animalMainActivity: '',
         animalSideline: '',
         animalCattle: '',
@@ -50,6 +53,11 @@ const EditAnimalScreen = (props) => {
     //definición del peso
     const selectWeightText = (value, animalWeight) => {
         setAnimal({ ...animal, [animalWeight]: value })
+    }
+
+    //definición del estado de castrado
+    const selectCastrateText = (value, animalCastrate) => {
+        setAnimal({ ...animal, [animalCastrate]: value })
     }
 
     //definición de la fecha de nacimiento
@@ -105,12 +113,137 @@ const EditAnimalScreen = (props) => {
 
     //función para editar los datos del animal
     const updateAnimal = async () => {
-        if ((animal.animalName === '') || (animal.animalCode === '') || (animal.animalGenerer === '--' || (animal.animalRace === '--' || (animal.animalMainActivity === '--')))) {
+        function monthFormat() {
+            const str = animal.animalBirth;
+            const date = new Date(str);
+            const timestamp = date.getTime();
+            const dateFormat1 = new Date(parseInt(timestamp));
+            const now = moment();
+            const months = now.diff(dateFormat1, 'months');
+            return (months)
+        }
+        function animalWeight() {
+            const peso = parseInt(animal.animalWeight)
+            return (peso)
+        }
+        if ((animal.animalName === '') || (animal.animalCode === '') || (animal.animalGenerer === '--' || (animal.animalRace === '--' || (animal.animalMainActivity === '--' || (animal.animalWeight === ''))))) {
             alert('Complete los campos');
         } else if (animal.animalName.length > 25) {
             Alert.alert(
                 'Error',
                 'Escriba un nombre más corto',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animal.animalCode.length > 25) {
+            Alert.alert(
+                'Error',
+                'Escriba un código más corto',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animal.animalGenerer === 'M' && animal.animalCastrate === '--') {
+            Alert.alert(
+                'Error',
+                'Defina si el macho ha sido castrado o no',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animal.animalGenerer === 'H' && animal.animalCastrate === 'Sí') {
+            Alert.alert(
+                'Error',
+                'Las hembras no pueden ser castradas',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animal.animalCastrate === 'Sí' && animal.animalMainActivity === 'Reproducción') {
+            Alert.alert(
+                'Error',
+                'Los machos castrados no se pueden usar para la reproducción',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animal.animalGenerer === 'M' && animal.animalMainActivity === 'Producción de leche') {
+            Alert.alert(
+                'Error',
+                'Los machos no producen leche',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animal.animalMainActivity === animal.animalSideline) {
+            Alert.alert(
+                'Error',
+                'La actividad principal se repite con la actividad secundaria',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (animalWeight() < 15 || (monthFormat() < 4 && animalWeight() > 120)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if ((monthFormat() > 3 && animalWeight() < 20) || (monthFormat() < 9 && animalWeight() > 250)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if ((monthFormat() > 8 && animalWeight() < 40) || (monthFormat() < 13 && animalWeight() > 350)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if ((monthFormat() > 12 && animalWeight() < 70) || (monthFormat() < 19 && animalWeight() > 500)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if ((monthFormat() > 18 && animalWeight() < 100) || (monthFormat() < 25 && animalWeight() > 600)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if ((monthFormat() > 24 && animalWeight() < 120) || (monthFormat() < 31 && animalWeight() > 680)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if ((monthFormat() > 30 && animalWeight() < 120) || (monthFormat() < 49 && animalWeight() > 850)) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
+                [{
+                    text: 'Ok'
+                }]
+            )
+        } else if (monthFormat() > 48 && animalWeight() < 150) {
+            Alert.alert(
+                'Error',
+                'Peso irreal',
                 [{
                     text: 'Ok'
                 }]
@@ -125,7 +258,9 @@ const EditAnimalScreen = (props) => {
                 animalGenerer: animal.animalGenerer,
                 animalBirth: animal.animalBirth,
                 animalDescription: animal.animalDescription,
-                animalWeight: parseInt(animal.animalWeight),
+                animalWeight: animal.animalWeight,
+                animalCastrate: animal.animalCastrate,
+                animalLactationCycle: animal.animalLactationCycle,
                 animalMainActivity: animal.animalMainActivity,
                 animalSideline: animal.animalSideline,
             });
@@ -203,14 +338,28 @@ const EditAnimalScreen = (props) => {
             </View>
 
             <View style={styles.inputGroup}>
-                <Text style={{ fontSize: 18, marginLeft: 5 }}>Peso en libras</Text>
+                <Text style={{ fontSize: 18, marginLeft: 5 }}>Peso en kilogramos</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='Peso el libras'
+                    placeholder='Peso en kilogramos'
                     keyboardType='numeric'
                     onChangeText={value => selectWeightText(value, 'animalWeight')}
                     value={animal.animalWeight}
                 />
+            </View>
+
+            <View style={styles.inputGroup}>
+                <Text style={{ fontSize: 18 }}>Castrado</Text>
+                <Picker
+                    style={{ backgroundColor: '#bfbfbf', borderRadius: 10 }}
+                    selectedValue={animal.animalCastrate}
+                    onValueChange={(value) => selectCastrateText(value, 'animalCastrate')}
+                    value={animal.animalCastrate}
+                >
+                    <Picker.Item label="--" value="--" />
+                    <Picker.Item label="Sí" value="Sí" />
+                    <Picker.Item label="No" value="No" />
+                </Picker>
             </View>
 
             <View style={styles.inputGroup}>

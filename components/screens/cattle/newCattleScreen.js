@@ -41,6 +41,7 @@ const NewCattleScreen = (props) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.inputGroup}>
+                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10, alignSelf: 'center' }}>Ingrese el nombre de la finca</Text>
                 <TextInput
                     multiline
                     style={{ fontSize: 18 }}
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 35,
+        backgroundColor: '#ffffff',
     },
     inputGroup: {
         flex: 1,

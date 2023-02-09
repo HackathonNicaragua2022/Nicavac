@@ -13,12 +13,17 @@ import NewCattleScreen from './components/screens/cattle/newCattleScreen';
 import CattlesListScreen from './components/screens/cattle/cattlesListScreen';
 import CategoryScreen from './components/screens/cattle/categoryScreen';
 import NewAnimalScreen from './components/screens/animal/newAnimalScreen';
-import BullsListScreen from './components/screens/animal/bullsListScreen';
-import CowsListScreen from './components/screens/animal/cowsListScreen';
-import CalvesListScreen from './components/screens/animal/calvesListScreen';
+import BullsListScreen from './components/screens/animal/list/bullsListScreen';
+import CowsListScreen from './components/screens/animal/list/cowsListScreen';
+import OxenListScreen from './components/screens/animal/list/oxenListScreen';
+import PorkerListScreen from './components/screens/animal/list/porkerListScreen';
+import SteersListScreen from './components/screens/animal/list/steersListScreen';
+import YearlingsListScreen from './components/screens/animal/list/yearlingsListScreen';
+import CalvesListScreen from './components/screens/animal/list/calvesListScreen';
 import AnimalDetailsScreen from './components/screens/animal/animalDetailsScreen';
 import VaccinesListScreen from './components/screens/animal/vaccine/vaccinesListScreen';
 import VaccineDetailsScreen from './components/screens/animal/vaccine/vaccineDetailsScreen';
+import DataScreen from './components/screens/animal/data/dataScreen';
 import EditAnimalScreen from './components/screens/animal/editAnimalScreen';
 import EmployeesScreen from './components/screens/cattle/employeesScreen';
 
@@ -51,7 +56,7 @@ function MyStack() {
       <Stack.Screen 
         name= 'newCattleScreen' 
         component={NewCattleScreen} 
-        options= {{title: 'Nueva Finca', headerShown: true}}
+        options= {{title: 'Nueva Finca', headerShown: true, headerTintColor: 'white', headerStyle: {backgroundColor: '#346a4a'}}}
       />
       <Stack.Screen
         name= 'categoryScreen'
@@ -82,6 +87,34 @@ function MyStack() {
         },}}
       />
       <Stack.Screen
+        name='oxenListScreen'
+        component={OxenListScreen}
+        options={{title:'Bueyes', headerShown: true, headerTintColor: 'white', headerStyle: {
+          backgroundColor: '#346a4a',
+        },}}
+      />
+      <Stack.Screen
+        name='porkerListScreen'
+        component={PorkerListScreen}
+        options={{title:'Cebones', headerShown: true, headerTintColor: 'white', headerStyle: {
+          backgroundColor: '#346a4a',
+        },}}
+      />
+      <Stack.Screen
+        name='steersListScreen'
+        component={SteersListScreen}
+        options={{title:'Novillos', headerShown: true, headerTintColor: 'white', headerStyle: {
+          backgroundColor: '#346a4a',
+        },}}
+      />
+      <Stack.Screen
+        name='yearlingsListScreen'
+        component={YearlingsListScreen}
+        options={{title:'Añojos', headerShown: true, headerTintColor: 'white', headerStyle: {
+          backgroundColor: '#346a4a',
+        },}}
+      />
+      <Stack.Screen
         name='calvesListScreen'
         component={CalvesListScreen}
         options={{title:'Terneros', headerShown: true, headerTintColor: 'white', headerStyle: {
@@ -106,6 +139,13 @@ function MyStack() {
         name='vaccineDetailsScreen'
         component={VaccineDetailsScreen}
         options={{title: 'Detalles del tratamiento', headerShown: true, headerTintColor: 'white', headerStyle: {
+          backgroundColor: '#346a4a',
+        },}}
+      />
+      <Stack.Screen
+        name='dataScreen'
+        component={DataScreen}
+        options={{title: 'Datos', headerShown: true, headerTintColor: 'white', headerStyle: {
           backgroundColor: '#346a4a',
         },}}
       />

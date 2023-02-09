@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { ListItem, Avatar, SearchBar } from 'react-native-elements';
+import { ListItem, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import firebase from '../../../database/firebase';
+import firebase from '../../../../database/firebase';
 import moment from 'moment';
 
-const CalvesListScreen = (props) => {
+const SteersListScreen = (props) => {
 
     const [animals, setAnimals] = useState([]);
 
     const cattleId = props.route.params.cattleId
 
-    //lectura de los datos de los animales
+    //Extracción del id de la finca
     useEffect(() => {
         firebase.db.collection('animals').onSnapshot((querySnapshot) => {
             const animals = [];
             querySnapshot.docs.forEach((doc) => {
-                const { animalCode, animalName, animalGenerer, animalBirth, animalCattle } = doc.data();
+                const { animalCode, animalName, animalGenerer, animalBirth, animalCattle, animalCastrate } = doc.data();
                 const date = animalBirth
                 if (date != null) {
                     const timestamp = date.toString()
@@ -24,7 +24,7 @@ const CalvesListScreen = (props) => {
                     const dateFormatl = new Date(parseInt(milliseconds))
                     const now = moment();
                     const mo = now.diff(dateFormatl, 'months');
-                    if ((mo <= 48) && (animalCattle === cattleId)) {
+                    if (((mo > 23) && (mo < 49)) && (animalCattle === cattleId) && ((animalCastrate === 'No') || (animalCastrate === '--'))) {
                         animals.push({
                             animalId: doc.id,
                             animalCode,
@@ -32,10 +32,10 @@ const CalvesListScreen = (props) => {
                             animalGenerer,
                             animalBirth,
                             animalCattle,
+                            animalCastrate,
                         });
                     }
                 }
-
             });
             setAnimals(animals);
         });
@@ -51,7 +51,7 @@ const CalvesListScreen = (props) => {
                         })}>
                         <Avatar
                             source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/128/2298/2298491.png',
+                                uri: 'https://cdn-icons-png.flaticon.com/512/1660/1660788.png',
                             }}
                         />
                         <ListItem.Content>
@@ -70,12 +70,18 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#ffffff'
     },
+    btnL: {
+        marginTop: 20,
+        backgroundColor: '#346a4a',
+        padding: 10,
+        borderRadius: 10,
+        justifyContent: 'center',
+        width: '50%',
+        alignSelf: 'center',
+    },
     list: {
         borderRadius: 10,
-    },
-    txt: {
-        backgroundColor: '#bfbfbf'
     }
 })
 
-export default CalvesListScreen;
+export default SteersListScreen;

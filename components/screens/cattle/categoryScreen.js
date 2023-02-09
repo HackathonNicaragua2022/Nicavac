@@ -13,32 +13,83 @@ const CategoryScreen = (props) => {
                 <View style={styles.containerOptions}>
 
                     <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('cowsListScreen', { cattleId })}>
-                        <Avatar size={100}
-                            source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/512/1660/1660750.png',
-                            }}
-                        />
-                        <Text style={{ textAlign: 'center', fontSize: 25, color: '#242424' }}>Vacas</Text>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/2395/2395765.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Vacas</Text>
+                        </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('bullsListScreen', { cattleId })}>
-                        <Avatar size={100}
-                            source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/512/3819/3819549.png',
-                            }}
-                        />
-                        <Text style={{ textAlign: 'center', fontSize: 25, color: '#242424' }}>Toros</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/3819/3819472.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Toros</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('oxenListScreen', { cattleId })}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/3570/3570832.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Bueyes</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('porkerListScreen', { cattleId })}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/2298/2298414.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Cebones</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('steersListScreen', { cattleId })}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/1660/1660788.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Novillos</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('yearlingsListScreen', { cattleId })}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/4478/4478312.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Añojos</Text>
+                        </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={styles.btn} onPress={() => props.navigation.navigate('calvesListScreen', { cattleId })}>
-                        <Avatar size={100}
-                            source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/128/2298/2298491.png',
-                            }}
-                        />
-                        <Text style={{ textAlign: 'center', fontSize: 25, color: '#242424' }}>Terneros</Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                            <Avatar size={50}
+                                source={{
+                                    uri: 'https://cdn-icons-png.flaticon.com/512/4478/4478312.png',
+                                }}
+                            />
+                            <Text style={{ marginLeft: 10, fontSize: 30, color: '#242424' }}>Terneros</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
+
                 <ListItem style={{ padding: 0 }}>
                     <TouchableOpacity style={styles.btnA}
                         onPress={() => props.navigation.navigate('newAnimalScreen', { cattleId })}>
@@ -65,14 +116,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     btn: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: '#242424',
         padding: 10,
         borderRadius: 10,
         marginBottom: 10,
         marginRight: 10,
         marginLeft: 10,
-        alignItems: 'center'
     },
     btnA: {
         backgroundColor: '#346a4a',

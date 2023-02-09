@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import firebase from '../../../database/firebase';
+import firebase from '../../../../database/firebase';
 import moment from 'moment';
 
-const CowsListScreen = (props) => {
+const YearlingsListScreen = (props) => {
 
     const [animals, setAnimals] = useState([]);
 
     const cattleId = props.route.params.cattleId
 
-    //Extracción del id de la vacuna
+    //Extracción del id de la finca
     useEffect(() => {
         firebase.db.collection('animals').onSnapshot((querySnapshot) => {
             const animals = [];
             querySnapshot.docs.forEach((doc) => {
-                const { animalCode, animalName, animalGenerer, animalBirth, animalCattle } = doc.data();
+                const { animalCode, animalName, animalGenerer, animalBirth, animalCattle, animalCastrate } = doc.data();
                 const date = animalBirth
                 if (date != null) {
                     const timestamp = date.toString()
@@ -24,7 +24,7 @@ const CowsListScreen = (props) => {
                     const dateFormatl = new Date(parseInt(milliseconds))
                     const now = moment();
                     const mo = now.diff(dateFormatl, 'months');
-                    if ((mo > 48) && (animalGenerer === 'H') && (animalCattle === cattleId)) {
+                    if (((mo > 11) && (mo < 24)) && (animalCattle === cattleId)) {
                         animals.push({
                             animalId: doc.id,
                             animalCode,
@@ -32,6 +32,7 @@ const CowsListScreen = (props) => {
                             animalGenerer,
                             animalBirth,
                             animalCattle,
+                            animalCastrate,
                         });
                     }
                 }
@@ -50,7 +51,7 @@ const CowsListScreen = (props) => {
                         })}>
                         <Avatar
                             source={{
-                                uri: 'https://cdn-icons-png.flaticon.com/512/1660/1660750.png',
+                                uri: 'https://cdn-icons-png.flaticon.com/512/4478/4478312.png',
                             }}
                         />
                         <ListItem.Content>
@@ -83,4 +84,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CowsListScreen;
+export default YearlingsListScreen;

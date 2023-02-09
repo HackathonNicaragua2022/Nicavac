@@ -9,9 +9,12 @@ const VaccineDetailsScreen = (props) => {
 
     //Se inicializan los valores del objeto
     const initialVaccine = {
+        vaccineId: '',
         vaccineAnimalId: '',
+        vaccineType: '',
         vaccineName: '',
         vaccineDate: '',
+        vaccineDescription: '',
     };
 
     const [loading, setLoading] = useState(true);
@@ -50,7 +53,7 @@ const VaccineDetailsScreen = (props) => {
             const now = moment();
             const months = now.diff(dateFormatl, 'months');
             return (months)
-        }
+        } 
     }
 
     //Extracción del id de la vacuna
@@ -66,6 +69,21 @@ const VaccineDetailsScreen = (props) => {
         )
     }
 
+    const handleVaccineDescriptionText = (value, vaccineDescription) => {
+        setVaccine({ ...vaccine, [vaccineDescription]: value });
+    };
+
+    const newVaccineDescription = async () => {
+        const dbRef = firebase.db.collection('vaccines').doc(vaccine.vaccineId);
+        await dbRef.set({
+            vaccineAnimalId: vaccine.vaccineAnimalId,
+            vaccineType: vaccine.vaccineType,
+            vaccineName: vaccine.vaccineName,
+            vaccineDate: vaccine.vaccineDate,
+            vaccineDescription: vaccine.vaccineDescription,
+        })
+    }
+
     return (
         <ScrollView style={{ backgroundColor: '#ffffff' }}>
             <Text style={{ fontSize: 30, alignSelf: "center", fontWeight: "bold", marginBottom: 1 }}
@@ -78,12 +96,36 @@ const VaccineDetailsScreen = (props) => {
                 <Text style={{ fontSize: 18 }}>Hace {monthFormat()} meses</Text>
             </View>
 
+            <View style={{ padding: 20 }}>
+                <View style={{flex: 1, flexDirection:'row', alignItems: 'center'}}>
+                    <Text style={{ fontSize: 20, marginBottom: 5 }}>Descripción </Text>
+
+                    <TouchableOpacity onPress={() => newVaccineDescription()}>
+                        <View style={styles.btnG} >
+                            <Image
+                                style={{ width: 30, height: 30 }}
+                                source={require('../../../src/save.png')}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <TextInput
+                    multiline
+                    style={{ borderWidth: 1, borderColor: '#bfbfbf', borderRadius: 10, fontSize: 20, padding: 10 }}
+                    placeholder="Descripción"
+                    onChangeText={(value) => handleVaccineDescriptionText(value, 'vaccineDescription')}
+                    value={vaccine.vaccineDescription}></TextInput>
+            </View>
+
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
-
+    btnG: {
+        flex: 1,
+        alignItems: 'flex-end',
+    },
 })
 
 export default VaccineDetailsScreen;

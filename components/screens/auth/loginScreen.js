@@ -42,7 +42,7 @@ export default function Login(props) {
                         <Image
                             source={require('../../src/Nicavacverde.png')}
                         />
-                        <Text style={{ fontSize: 40, color: '#346a4a', fontWeight: "bold", marginBottom: 60 }}>NICAVAC</Text>
+                        <Text style={{ fontSize: 40, color: '#346a4a', fontWeight: "bold", marginBottom: 50 }}>NICAVAC</Text>
                     </View>
                     <View style={styles.containerOptions}>
 
@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     },
     containerLoading: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
     input: {
         flex: 1,
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 60,
+        marginTop: 100,
     },
     containerOptions: {
         flex: 1,
