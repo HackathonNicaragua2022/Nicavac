@@ -25,7 +25,8 @@ import VaccinesListScreen from './components/screens/animal/vaccine/vaccinesList
 import VaccineDetailsScreen from './components/screens/animal/vaccine/vaccineDetailsScreen';
 import DataScreen from './components/screens/animal/data/dataScreen';
 import EditAnimalScreen from './components/screens/animal/editAnimalScreen';
-import EmployeesScreen from './components/screens/cattle/employeesScreen';
+import EmployeesScreen from './components/screens/cattle/employee/employeesScreen';
+import CategoryEScreen from './components/screens/cattle/employee/categoryEScreen';
 
 const Stack = createStackNavigator();
 
@@ -160,6 +161,13 @@ function MyStack() {
         name='employeesScreen'
         component={EmployeesScreen}
         options={{title: 'Empleados', headerShown: true, headerTintColor: 'white', headerStyle: {
+          backgroundColor: '#346a4a',
+        },}}
+      />
+      <Stack.Screen
+        name='categoryEScreen'
+        component={CategoryEScreen}
+        options={{title: 'Categorías', headerShown: true, headerTintColor: 'white', headerStyle: {
           backgroundColor: '#346a4a',
         },}}
       />

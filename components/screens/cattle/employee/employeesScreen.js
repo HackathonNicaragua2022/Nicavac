@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { ScrollView, TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import { Text, View, StyleSheet } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
-import firebase from '../../../database/firebase'
+import firebase from '../../../../database/firebase'
 
 const EmployeesScreen = (props) => {
-
-    const [employeeEmail, setEmployeeEmail] = useState('')
 
     const initialCState = {
         cattleName: '',

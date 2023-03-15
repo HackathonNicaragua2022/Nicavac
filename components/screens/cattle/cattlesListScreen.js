@@ -105,7 +105,7 @@ const CattlesListScreen = (props) => {
                     return (
                         <ListItem style={styles.list} key={cattle.cattleId}>
                             <Avatar
-                                onPress={() => props.navigation.navigate('categoryScreen', {
+                                onPress={() => props.navigation.navigate('categoryEScreen', {
                                     cattleId: cattle.cattleId
                                 })}
                                 source={{
